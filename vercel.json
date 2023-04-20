@@ -5,7 +5,7 @@
       "dest": "https://api.openai.com/v1/$1",
       "methods": ["GET", "POST", "PUT", "DELETE"],
       "headers": {
-        "Authorization": "{req.headers.authorization} Bearer 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"
+        "Authorization": "{req.headers.authorization} Bearer {process.env.OPENAI_API_TOKEN}"
       }
     },
     { "src": "/(.*)", "dest": "/" },
