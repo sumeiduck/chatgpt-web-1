@@ -5,10 +5,7 @@
       "dest": "https://ai.fakeopen.com/v1/$1",
       "methods": ["GET", "POST", "PUT", "DELETE"],
       "headers": {
-        "Authorization": [
-          "{req.headers.authorization}",
-          "Bearer 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"
-        ]
+        "Authorization": "{req.headers.authorization} Bearer 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"
       }
     },
     { "src": "/(.*)", "dest": "/" },
