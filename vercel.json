@@ -2,7 +2,7 @@
   "routes": [
     {
       "src": "/v1/(.*)",
-      "dest": "https://api.openai.com/v1/$1",
+      "dest": "https://ai.fakeopen.com/v1/$1",
       "methods": ["GET", "POST", "PUT", "DELETE"],
       "headers": {
         "Authorization": [
