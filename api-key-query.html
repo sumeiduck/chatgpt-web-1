@@ -141,9 +141,9 @@
                 const accessUntil = new Date(subscriptionData.access_until * 1000);
                 const hardLimitUsd = subscriptionData.hard_limit_usd;
 
-                const usageReq = await fetch(`https://api.openai.com/v1/dashboard/billing/usage?start_date=${getStartDate()}&end_date=${getCurrentDate()}`, { headers });
+                const usageReq = await fetch(`/v1/dashboard/billing/usage?start_date=${getStartDate()}&end_date=${getCurrentDate()}`, { headers });
                 const usageData = await usageReq.json();
-                const totalUsage = usageData.total_usage / 100; // Convert cents to dollars
+                const totalUsage = usageData.total_usage / 100;
                 const remaining = hardLimitUsd - totalUsage;
 
                 const newRow = `<tr>
