@@ -6,6 +6,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Key 查询页面</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 30px 0;
+            font-size: 28px;
+            color: #333;
+        }
+
+        textarea {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            resize: none;
+            font-size: 14px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #1e90ff;
+            color: #fff;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #1c86ee;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 10px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
 <body>
     <div>
@@ -62,7 +125,7 @@
 
                 const usageReq = await fetch(`/v1/dashboard/billing/usage?start_date=${getStartDate()}&end_date=${getCurrentDate()}`, { headers });
                 const usageData = await usageReq.json();
-                const totalUsage = usageData.total_usage;
+                const totalUsage = usageData.total_usage/100;
                 const remaining = hardLimitUSD - totalUsage;
 
                 const row = `<tr>
