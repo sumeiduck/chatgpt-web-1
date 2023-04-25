@@ -132,7 +132,7 @@
             for (const key of keys) {
                 if (!key) continue;
                 
-                const maskedKey = apiKey.replace(/^([A-Za-z0-9]{4})(.*)([A-Za-z0-9]{4})$/, "$1****$3");
+                const maskedKey = key.replace(/^([A-Za-z0-9]{4})(.*)([A-Za-z0-9]{4})$/, "$1****$3");
 
                 const headers = {
                     "Authorization": `Bearer ${key}`
