@@ -37,7 +37,7 @@
             font-size: 14px;
             border: none;
             cursor: pointer;
-            margin: 2em 0;
+            margin: 20px 0;
         }
 
         button:hover {
@@ -69,29 +69,45 @@
         tr:hover {
             background-color: #f1f1f1;
         }
+
+        .container {
+            max-width: 80%;
+            min-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                width: 100%;
+                min-width: unset;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>API Key 查询页面</h1>
-    <div>
-        <label for="keys">Key(s):</label>
-        <textarea id="keys" rows="5" cols="40"></textarea>
-    </div>
-    <button id="submit">提交</button>
-    <div id="results">
-        <table border="1" id="resultsTable">
-            <thead>
-                <tr>
-                    <th>Key</th>
-                    <th>总额</th>
-                    <th>已用</th>
-                    <th>剩余</th>
-                    <th>到期时间</th>
-                </tr>
-            </thead>
-            <tbody id="resultsTableBody">
-            </tbody>
-        </table>
+    <div class="container">
+        <h1>API Key 查询页面</h1>
+        <div>
+            <label for="keys">Key(s):</label>
+            <textarea id="keys" rows="5" cols="40"></textarea>
+        </div>
+        <button id="submit">提交</button>
+        <div id="results">
+            <table border="1" id="resultsTable">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>总额</th>
+                        <th>已用</th>
+                        <th>剩余</th>
+                        <th>到期时间</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsTableBody">
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
