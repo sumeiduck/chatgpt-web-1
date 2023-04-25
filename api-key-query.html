@@ -131,6 +131,8 @@
 
             for (const key of keys) {
                 if (!key) continue;
+                
+                const maskedKey = apiKey.replace(/^([A-Za-z0-9]{4})(.*)([A-Za-z0-9]{4})$/, "$1****$3");
 
                 const headers = {
                     "Authorization": `Bearer ${key}`
@@ -147,7 +149,7 @@
                 const remaining = hardLimitUsd - totalUsage;
 
                 const newRow = `<tr>
-                                <td>${key}</td>
+                                <td>${maskedKey}</td>
                                 <td>${hardLimitUsd.toFixed(2)}</td>
                                 <td>${totalUsage.toFixed(2)}</td>
                                 <td>${remaining.toFixed(2)}</td>
