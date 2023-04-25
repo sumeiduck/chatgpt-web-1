@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Key 查询页面</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div>
+        <label for="keys">Key(s):</label>
+        <textarea id="keys" rows="5" cols="40"></textarea>
+    </div>
+    <button id="submit">提交</button>
+    <div id="results">
+        <table border="1" id="resultsTable">
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>总额</th>
+                    <th>已用</th>
+                    <th>剩余</th>
+                    <th>到期时间</th>
+                </tr>
+            </thead>
+            <tbody id="resultsTableBody">
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const formatDate = (date) => {
+            return date.toISOString().substring(0, 10);
+        };
+
+        const getCurrentDate = () => {
+            return formatDate(new Date());
+        };
+
+        const getStartDate = () => {
+            const date = new Date();
+            date.setDate(date.getDate() - 90);
+            return formatDate(date);
+        };
+
+        $("#submit").click(async function() {
+            const keys = $("#keys").val().split("\n");
+            $("#resultsTableBody").empty();
+
+            for (const key of keys) {
+                if (!key) continue;
+
+                const headers = {
+                    "Authorization": `Bearer ${key}`
+                };
+
+                const subscriptionReq = await fetch("/v1/dashboard/billing/subscription", { headers });
+                const subscriptionData = await subscriptionReq.json();
+                const accessUntil = new Date(subscriptionData.access_until * 1000).toLocaleDateString("zh-CN");
+                const hardLimitUSD = subscriptionData.hard_limit_usd;
+
+                const usageReq = await fetch(`/v1/dashboard/billing/usage?start_date=${getStartDate()}&end_date=${getCurrentDate()}`, { headers });
+                const usageData = await usageReq.json();
+                const totalUsage = usageData.total_usage;
+                const remaining = hardLimitUSD - totalUsage;
+
+                const row = `<tr>
+                                <td>${key}</td>
+                                <td>${hardLimitUSD.toFixed(2)}</td>
+                                <td>${totalUsage.toFixed(2)}</td>
+                                <td>${remaining.toFixed(2)}</td>
+                                <td>${accessUntil}</td>
+                             </tr>`;
+                $("#resultsTableBody").append(row);
+            }
+        });
+    </script>
+</body>
+</html>
