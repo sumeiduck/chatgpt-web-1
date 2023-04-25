@@ -71,6 +71,7 @@
     </style>
 </head>
 <body>
+    <h1>API Key 查询页面</h1>
     <div>
         <label for="keys">Key(s):</label>
         <textarea id="keys" rows="5" cols="40"></textarea>
@@ -120,24 +121,24 @@
 
                 const subscriptionReq = await fetch("/v1/dashboard/billing/subscription", { headers });
                 const subscriptionData = await subscriptionReq.json();
-                const accessUntil = new Date(subscriptionData.access_until * 1000).toLocaleDateString("zh-CN");
-                const hardLimitUSD = subscriptionData.hard_limit_usd;
+                const accessUntil = new Date(subscriptionData.access_until * 1000);
+                const hardLimitUsd = subscriptionData.hard_limit_usd;
 
-                const usageReq = await fetch(`/v1/dashboard/billing/usage?start_date=${getStartDate()}&end_date=${getCurrentDate()}`, { headers });
+                const usageReq = await fetch(`https://api.openai.com/v1/dashboard/billing/usage?start_date=${getStartDate()}&end_date=${getCurrentDate()}`, { headers });
                 const usageData = await usageReq.json();
-                const totalUsage = usageData.total_usage/100;
-                const remaining = hardLimitUSD - totalUsage;
+                const totalUsage = usageData.total_usage / 100; // Convert cents to dollars
+                const remaining = hardLimitUsd - totalUsage;
 
-                const row = `<tr>
+                const newRow = `<tr>
                                 <td>${key}</td>
-                                <td>${hardLimitUSD.toFixed(2)}</td>
+                                <td>${hardLimitUsd.toFixed(2)}</td>
                                 <td>${totalUsage.toFixed(2)}</td>
                                 <td>${remaining.toFixed(2)}</td>
-                                <td>${accessUntil}</td>
-                             </tr>`;
-                $("#resultsTableBody").append(row);
-            }
-        });
-    </script>
-</body>
+                                <td>${formatDate(accessUntil)}</td>
+                                </tr>`;
+                $("#resultsTableBody").append(newRow);
+              }
+          });
+      </script>
+  </body>
 </html>
