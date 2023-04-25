@@ -8,7 +8,6 @@
         "Authorization": "{req.headers.authorization} Bearer {process.env.OPENAI_API_TOKEN}"
       }
     },
-    { "src": "/(.*)", "dest": "/" },
     { "handle": "filesystem" },
     { "src": "/(.*)", "status": 404, "dest": "/" }
   ]
